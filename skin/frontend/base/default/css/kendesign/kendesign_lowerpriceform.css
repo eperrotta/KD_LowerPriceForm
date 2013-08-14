@@ -1,0 +1,13 @@
+/**
+ * CSS for Lower Price Form
+ */
+/**
+ * CSS for Lower Price Form
+ */
+
+div.lowerPriceFormContainer 	{ margin: 10px 0;}
+a.lowerPriceForm_mainlink 		{ font-weight:bold; cursor:pointer;}
+div.lowerPriceFormWrapper 		{ display:none; }
+div.lowerPriceFormMessages		{ font-size: 11px;}
+div.form-lowerPriceForm label 	{ display: block; font-size: 13px; font-weight: bold; margin: 5px 0 2px; color: #0A263C;}
+div.form-lowerPriceForm button	{ margin-top: 10px;}

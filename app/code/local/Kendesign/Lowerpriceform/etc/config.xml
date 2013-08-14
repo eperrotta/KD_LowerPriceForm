@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   Kendesign
+ * @package    Kendesign_Lowerpriceform
+ * @author     Enzo Perrotta
+ * @license    http://www.gnu.org/licenses/gpl-3.0-standalone.html (GPL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Kendesign_Lowerpriceform>
+            <version>0.1.1</version>
+        </Kendesign_Lowerpriceform>
+    </modules>
+    <frontend>
+        <routers>
+            <lowerpriceform>
+                <use>standard</use>
+                <args>
+                    <module>Kendesign_Lowerpriceform</module>
+                    <frontName>lowerpriceform</frontName>
+                </args>
+            </lowerpriceform>
+        </routers>
+        <layout>
+            <updates>
+                <lowerpriceform>
+                    <file>lowerpriceform.xml</file>
+                </lowerpriceform>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <lowerpriceform>
+                    <files>
+                        <default>lowerpriceform.csv</default>
+                    </files>
+                </lowerpriceform>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+			<lowerpriceform>
+				<use>admin</use>
+				<args>
+					<module>Kendesign_Lowerpriceform</module>
+					<frontName>lowerpriceform</frontName>
+				</args>
+			</lowerpriceform>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<lowerpriceform module="lowerpriceform">
+				<title>Lowerpriceform</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<items module="lowerpriceform">
+						<title>List Lower Prices</title>
+						<sort_order>0</sort_order>
+						<action>lowerpriceform/adminhtml_lowerpriceform</action>
+					</items>
+				</children>
+			</lowerpriceform>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Kendesign_Lowerpriceform>
+							<title>Lowerpriceform Module</title>
+							<sort_order>10</sort_order>
+						</Kendesign_Lowerpriceform>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <lowerpriceform_options>
+                                            <title>Kendesign Lowerpriceform configuration</title>
+                                        </lowerpriceform_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<lowerpriceform>
+					<file>lowerpriceform.xml</file>
+				</lowerpriceform>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <lowerpriceform>
+                <class>Kendesign_Lowerpriceform_Model</class>
+                <resourceModel>lowerpriceform_mysql4</resourceModel>
+            </lowerpriceform>
+            <dateformat>
+                <class>Kendesign_Dateformat_Model</class>
+            </dateformat>
+            <lowerpriceform_mysql4>
+                <class>Kendesign_Lowerpriceform_Model_Mysql4</class>
+                <entities>
+                    <lowerpriceform>
+                        <table>lowerpriceform</table>
+                    </lowerpriceform>
+                </entities>
+            </lowerpriceform_mysql4>
+        </models>
+        <resources>
+            <lowerpriceform_setup>
+                <setup>
+                    <module>Kendesign_Lowerpriceform</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </lowerpriceform_setup>
+            <lowerpriceform_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </lowerpriceform_write>
+            <lowerpriceform_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </lowerpriceform_read>
+        </resources>
+        <blocks>
+            <lowerpriceform>
+                <class>Kendesign_Lowerpriceform_Block</class>
+            </lowerpriceform>
+        </blocks>
+        <helpers>
+            <lowerpriceform>
+                <class>Kendesign_Lowerpriceform_Helper</class>
+            </lowerpriceform>
+        </helpers>
+        <template>
+            <email>
+                <lowerprice_email_tpl module="Kendesign_Lowerpriceform">
+                    <label>Lower Price Email Template</label>
+                    <file>lowerpriceemail.html</file>
+                    <type>html</type>
+                </lowerprice_email_tpl>
+            </email>
+        </template>
+    </global>
+</config>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <catalog_product_view translate="label">
+     	<reference name="product.info.additional">
+     		<block 
+            	type="lowerpriceform/formbox" 
+            	name="lowerpriceform" 
+            	template="lowerpriceform/formbox.phtml"
+            	/>
+     	</reference>
+        <reference name="head">
+            <block type="core/text" name="google.jquery">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>]]>
+                    </text>
+                </action>
+            </block>
+            <block type="core/text" name="google.jquery.noconflict" after="google.jquery">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script type="text/javascript">var $j = jQuery.noConflict(); </script>]]>
+                    </text>
+                </action>
+            </block>
+            <action method="addCss"><name>css/kendesign/kendesign_lowerpriceform.css</name></action>
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params></params></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+            <block type="core/html_calendar" name="head.calendar" as="calendar" template="page/js/calendar.phtml"></block>
+        </reference>
+	</catalog_product_view>
+    <lowerpriceform_index_sendfeedback>
+        <reference name="content">
+            <block 
+                type="lowerpriceform/formbox" 
+                name="lowerpriceform" 
+                template="lowerpriceform/formbox.phtml" />
+        </reference>
+    </lowerpriceform_index_sendfeedback>
+
+</layout> 

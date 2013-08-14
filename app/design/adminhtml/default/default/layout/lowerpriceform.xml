@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <lowerpriceform_adminhtml_lowerpriceform_index>
+        <reference name="content">
+            <block type="lowerpriceform/adminhtml_lowerpriceform" name="lowerpriceform" />
+        </reference>
+    </lowerpriceform_adminhtml_lowerpriceform_index>
+</layout>

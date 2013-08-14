@@ -1,0 +1,92 @@
+<div class="lowerPriceFormContainer">
+    <h2><a class="lowerPriceForm_mainlink"><?php echo $this->__('Did u find a lower price?') ?></a></h2>
+    <ul class="messages" id="lowerPriceFormMessages"></ul>
+    <div class="lowerPriceFormWrapper">
+        <p><?php echo $this->__('Did u find this product at a lower price?') ?></p>
+        <form id="lowerPriceForm" action="" method="post">
+            <?php $_product = Mage::registry('current_product'); ?>
+            <input type="hidden" name="lowerPriceSku" value="<?php echo($_product->getSku()); ?>" />
+            <input type="hidden" name="lowerPriceMyPrice" value="<?php echo($_product->getFinalPrice()); ?>" />
+            <div class="form-lowerPriceForm">
+                <label for="lowerPriceUrl"><?php echo $this->__('URL:') ?></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry" name="lowerPriceUrl" id="lowerPriceUrl" />
+                </div>
+                
+                <label for="lowerPricePrice"><?php echo $this->__('Price:') ?></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry" name="lowerPricePrice" id="lowerPricePrice" />
+                </div>
+                
+                <label for="lowerPriceShipping"><?php echo $this->__('Shipping costs:') ?></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry" name="lowerPriceShipping" id="lowerPriceShipping" />
+                </div>
+                
+                <label for="lowerPriceDate"><?php echo $this->__('Price Date:') ?></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry" name="lowerPriceDate" id="lowerPriceDate" />
+                    <img title="Select date" id="lowerPriceDateTrigger" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . 'adminhtml/default/default/images/grid-cal.gif'; ?>" class="v-middle">
+                </div>
+
+
+                <button type="button" title="<?php echo $this->__('Send feedback') ?>" class="button" onclick="kendesign_submitLowerPriceForm()">
+                    <span>
+                        <span><?php echo $this->__('Send feedback') ?></span>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+$dateFormat = Mage::getStoreConfig('lowerpriceform_options/lowerpriceform_configuration/calendar_dateformat'); 
+$finalDateFormat = '%'. substr($dateFormat, 0, 2) .'%'. substr($dateFormat, 2, 2) .'%'. substr($dateFormat, 4, 2);
+?>
+<script type="text/javascript">
+//<![CDATA[
+    Calendar.setup({
+        inputField : 'lowerPriceDate',
+        ifFormat : '<?php echo($finalDateFormat); ?>',
+        button : 'lowerPriceDateTrigger',
+        align : 'Bl',
+        singleClick : true
+    });
+//]]>
+
+    var kendesign_lowerPriceFormJs = new VarienForm('lowerPriceForm');
+    function kendesign_submitLowerPriceForm(){
+        if(kendesign_lowerPriceFormJs.validator.validate()) {
+            //lowerPriceFormJs.form.submit();
+            var data = new Object();
+            $j("#lowerPriceForm :input").each(function() {
+                data[$j(this).attr("name")] = $j(this).val();
+            });
+            //return data;
+            $j.ajax({
+                url: "<?php echo $this->getFormAction(); ?>",
+                dataType: "json",
+                data: data,
+                success: function(data) {
+                    //response(data);
+                    console.log(data);
+                    var formResponse = '';
+                    formResponseClass = (data.code == 0) ? formResponseClass = 'success-msg' : 'error-msg';
+                    formResponse = '<li class="'+ formResponseClass +'">'+ data.message +'</li>';
+                    $j('div.lowerPriceFormWrapper').slideUp();
+                    $j('#lowerPriceFormMessages').html(formResponse);
+                }
+            });
+        }
+        return false;
+    }
+    $j(document).ready(function()
+    {
+        $j('a.lowerPriceForm_mainlink').click(function()
+        {
+            $j('div.lowerPriceFormWrapper').slideToggle();
+            $j('#lowerPriceFormMessages').html('');
+        });
+    });
+//]]>
+</script>
