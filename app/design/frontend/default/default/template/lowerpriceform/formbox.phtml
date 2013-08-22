@@ -7,29 +7,49 @@
             <?php $_product = Mage::registry('current_product'); ?>
             <input type="hidden" name="lowerPriceSku" value="<?php echo($_product->getSku()); ?>" />
             <input type="hidden" name="lowerPriceMyPrice" value="<?php echo($_product->getFinalPrice()); ?>" />
+            <input type="hidden" name="lowerPriceType" value="" id="lowerPriceTypeHidden" />            
             <div class="form-lowerPriceForm">
-                <label for="lowerPriceUrl"><?php echo $this->__('URL:') ?></label>
-                <div class="input-box">
-                    <input type="text" class="input-text required-entry" name="lowerPriceUrl" id="lowerPriceUrl" />
+                <input type="radio" name="lowerPriceTypeRadio" value="online" id="lowerPriceTypeOnline" />
+                    <label for="lowerPriceTypeOnline" class="radioLabel"><?php echo $this->__('Online:') ?></label><br />
+                <input type="radio" name="lowerPriceTypeRadio" value="offline" id="lowerPriceTypeOffline" />
+                    <label for="lowerPriceTypeOffline" class="radioLabel"><?php echo $this->__('Offline:') ?></label>
+                <br />
+                <div class="lowerPriceOnlineForm">
+                    <label for="lowerPriceUrl"><?php echo $this->__('URL:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceUrl" id="lowerPriceUrl" />
+                    </div>
+                    <label for="lowerPriceShipping"><?php echo $this->__('Shipping costs:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceShipping" id="lowerPriceShipping" />
+                    </div>
                 </div>
-                
-                <label for="lowerPricePrice"><?php echo $this->__('Price:') ?></label>
-                <div class="input-box">
-                    <input type="text" class="input-text required-entry" name="lowerPricePrice" id="lowerPricePrice" />
+                <div class="lowerPriceOfflineForm">
+                    <label for="lowerPriceShop"><?php echo $this->__('Shop name:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceShop" id="lowerPriceShop" />
+                    </div>
+                    <label for="lowerPriceCity"><?php echo $this->__('City:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceCity" id="lowerPriceCity" />
+                    </div>
+                    <label for="lowerPriceProv"><?php echo $this->__('Province:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceProv" id="lowerPriceProv" />
+                    </div>
                 </div>
-                
-                <label for="lowerPriceShipping"><?php echo $this->__('Shipping costs:') ?></label>
-                <div class="input-box">
-                    <input type="text" class="input-text required-entry" name="lowerPriceShipping" id="lowerPriceShipping" />
-                </div>
-                
-                <label for="lowerPriceDate"><?php echo $this->__('Price Date:') ?></label>
-                <div class="input-box">
-                    <input type="text" class="input-text required-entry" name="lowerPriceDate" id="lowerPriceDate" />
-                    <img title="Select date" id="lowerPriceDateTrigger" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . 'adminhtml/default/default/images/grid-cal.gif'; ?>" class="v-middle">
-                </div>
+                <div class="lowerPriceCommonForm">
+                    <label for="lowerPricePrice"><?php echo $this->__('Price:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPricePrice" id="lowerPricePrice" />
+                    </div>
 
-
+                    <label for="lowerPriceDate"><?php echo $this->__('Price Date:') ?></label>
+                    <div class="input-box">
+                        <input type="text" class="input-text required-entry" name="lowerPriceDate" id="lowerPriceDate" />
+                        <img title="Select date" id="lowerPriceDateTrigger" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . 'adminhtml/default/default/images/grid-cal.gif'; ?>" class="v-middle">
+                    </div>
+                </div>
                 <button type="button" title="<?php echo $this->__('Send feedback') ?>" class="button" onclick="kendesign_submitLowerPriceForm()">
                     <span>
                         <span><?php echo $this->__('Send feedback') ?></span>
@@ -82,10 +102,35 @@ $finalDateFormat = '%'. substr($dateFormat, 0, 2) .'%'. substr($dateFormat, 2, 2
     }
     $j(document).ready(function()
     {
+
+        $j('div.lowerPriceOnlineForm').hide();
+        $j('div.lowerPriceOfflineForm').hide();
+        $j('div.lowerPriceCommonForm').hide();
+        
+
         $j('a.lowerPriceForm_mainlink').click(function()
         {
             $j('div.lowerPriceFormWrapper').slideToggle();
             $j('#lowerPriceFormMessages').html('');
+            $j('.input-text').val('');
+        });
+
+        $j('#lowerPriceTypeOnline').click(function()
+        {
+            $j('.input-text').val('');
+            $j('div.lowerPriceOnlineForm').show();
+            $j('div.lowerPriceOfflineForm').hide();
+            $j('div.lowerPriceCommonForm').show();
+            $j('#lowerPriceTypeHidden').val('online');
+        });
+
+        $j('#lowerPriceTypeOffline').click(function()
+        {
+            $j('.input-text').val('');
+            $j('div.lowerPriceOnlineForm').hide();
+            $j('div.lowerPriceOfflineForm').show();
+            $j('div.lowerPriceCommonForm').show();
+            $j('#lowerPriceTypeHidden').val('offline');
         });
     });
 //]]>

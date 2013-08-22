@@ -14,6 +14,8 @@ class Kendesign_Lowerpriceform_IndexController extends Mage_Core_Controller_Fron
     {
         //Get the params in the request
         $params = $this->getRequest()->getParams();
+
+        $helper = Mage::helper('lowerpriceform');
         
         //Get the Email Template Model
         $emailTemplate = Mage::getModel('core/email_template'); 
@@ -23,30 +25,43 @@ class Kendesign_Lowerpriceform_IndexController extends Mage_Core_Controller_Fron
         //Prepare an array with the data from the form
         //TODO: check if the fields need to be sanitize
         $LowerPriceData = array();
+
+        $LowerPriceData['lowerPriceType'] = $params['lowerPriceType'];
+
         $LowerPriceData['lowerPriceUrl'] = $params['lowerPriceUrl'];
         $LowerPriceData['lowerPriceMyPrice'] = $params['lowerPriceMyPrice'];
         $LowerPriceData['lowerPricePrice'] = $params['lowerPricePrice'];
         $LowerPriceData['lowerPriceShipping'] = $params['lowerPriceShipping'];
         $LowerPriceData['lowerPriceDate'] = $params['lowerPriceDate'];
         $LowerPriceData['lowerPriceSku'] = $params['lowerPriceSku'];
-        
+
+        $LowerPriceData['lowerPriceShop'] = $params['lowerPriceShop'];
+        $LowerPriceData['lowerPriceCity'] = $params['lowerPriceCity'];
+        $LowerPriceData['lowerPriceProv'] = $params['lowerPriceProv'];
+
+        //echo("<pre>". Zend_Debug::dump($_GET, 'debug') ."</pre>");
+
 
         //Save into DB
         $Lowerpriceformmodel = Mage::getModel('lowerpriceform/lowerpriceform');
+
+        $Lowerpriceformmodel->setLowerPriceType($LowerPriceData['lowerPriceType']);
+
         $Lowerpriceformmodel->setLowerPriceUrl($LowerPriceData['lowerPriceUrl']);
         $Lowerpriceformmodel->setLowerPriceMyPrice($LowerPriceData['lowerPriceMyPrice']);
         $Lowerpriceformmodel->setLowerPricePrice($LowerPriceData['lowerPricePrice']);
         $Lowerpriceformmodel->setLowerPriceShipping($LowerPriceData['lowerPriceShipping']);
 
-        //I assume that Date Format is %d/%m/%Y
-        
+        $Lowerpriceformmodel->setLowerPriceShop($LowerPriceData['lowerPriceShop']);
+        $Lowerpriceformmodel->setLowerPriceCity($LowerPriceData['lowerPriceCity']);
+        $Lowerpriceformmodel->setLowerPriceProv($LowerPriceData['lowerPriceProv']);
+
+        //Retrieve the date format from the System Configuration
         $dateformat = Mage::getStoreConfig('lowerpriceform_options/lowerpriceform_configuration/calendar_dateformat'); 
         $formdate = DateTime::createFromFormat($dateformat, $LowerPriceData['lowerPriceDate'])->format("Y-m-d");
 
-        
         $Lowerpriceformmodel->setLowerPriceDate($formdate);
         $Lowerpriceformmodel->setLowerPriceSku($LowerPriceData['lowerPriceSku']);
-        //var_dump($Lowerpriceformmodel);;
         $Lowerpriceformmodel->save();
         
         // Get General email address as the Sender (Admin->Configuration->General->Store Email Addresses)
@@ -75,12 +90,12 @@ class Kendesign_Lowerpriceform_IndexController extends Mage_Core_Controller_Fron
         if($emailTemplate->send($recipient['email'], $recipient['name'], $emailTemplateVariables))
         {
             $response['code'] = 0;
-            $response['message'] = 'Everything ok';
+            $response['message'] = $helper->__('Report sent successfully');
         }
         else
         {
             $response['code'] = 0;
-            $response['message'] = 'Error sending the email';   
+            $response['message'] = $helper->__('Error sending the report');   
         }
 
         $response['date'] = $formdate;

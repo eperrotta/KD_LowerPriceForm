@@ -27,6 +27,20 @@ class Kendesign_Lowerpriceform_Block_Adminhtml_Lowerpriceform_Grid extends Mage_
           'index'     => 'lowerpriceform_id',
       ));
       
+      $this->addColumn('lower_price_date', array(
+          'header'    => Mage::helper('lowerpriceform')->__('Date of the price'),
+          'align'     =>'left',
+          'index'     => 'lower_price_date',
+      ));
+
+      $this->addColumn('lower_price_type', array(
+          'header'    => Mage::helper('lowerpriceform')->__('Type'),
+          'align'     =>'left',
+          'index'     => 'lower_price_type',
+          'type'  => 'options',
+          'options' => array('online' => 'online','offline' => 'offline'),
+      ));
+
       $this->addColumn('lower_price_sku', array(
           'header'    => Mage::helper('lowerpriceform')->__('SKU'),
           'align'     =>'left',
@@ -57,11 +71,24 @@ class Kendesign_Lowerpriceform_Block_Adminhtml_Lowerpriceform_Grid extends Mage_
           'index'     => 'lower_price_shipping',
       ));
 
-      $this->addColumn('lower_price_date', array(
-          'header'    => Mage::helper('lowerpriceform')->__('Date of the price'),
+      $this->addColumn('lower_price_shop', array(
+          'header'    => Mage::helper('lowerpriceform')->__('Shop name'),
           'align'     =>'left',
-          'index'     => 'lower_price_date',
+          'index'     => 'lower_price_shop',
       ));
+
+      $this->addColumn('lower_price_city', array(
+          'header'    => Mage::helper('lowerpriceform')->__('City'),
+          'align'     =>'left',
+          'index'     => 'lower_price_city',
+      ));
+
+      $this->addColumn('lower_price_prov', array(
+          'header'    => Mage::helper('lowerpriceform')->__('Province'),
+          'align'     =>'left',
+          'index'     => 'lower_price_prov',
+      ));
+
 
 	  
         $this->addColumn('action',
