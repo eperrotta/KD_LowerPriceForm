@@ -9,10 +9,14 @@
             <input type="hidden" name="lowerPriceMyPrice" value="<?php echo($_product->getFinalPrice()); ?>" />
             <input type="hidden" name="lowerPriceType" value="" id="lowerPriceTypeHidden" />            
             <div class="form-lowerPriceForm">
-                <input type="radio" name="lowerPriceTypeRadio" value="online" id="lowerPriceTypeOnline" />
+                <div class="input-box">
+                <input type="radio" name="lowerPriceTypeRadio" class="validate-one-required-by-name" value="online" id="lowerPriceTypeOnline" />
                     <label for="lowerPriceTypeOnline" class="radioLabel"><?php echo $this->__('Online:') ?></label><br />
-                <input type="radio" name="lowerPriceTypeRadio" value="offline" id="lowerPriceTypeOffline" />
+                </div>
+                <div class="input-box">
+                <input type="radio" name="lowerPriceTypeRadio" class="validate-one-required-by-name" value="offline" id="lowerPriceTypeOffline" />
                     <label for="lowerPriceTypeOffline" class="radioLabel"><?php echo $this->__('Offline:') ?></label>
+                </div>
                 <br />
                 <div class="lowerPriceOnlineForm">
                     <label for="lowerPriceUrl"><?php echo $this->__('URL:') ?></label>
